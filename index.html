@@ -524,7 +524,6 @@ function updateProfileCard() {
     const age = document.getElementById('input-age').value;
     const height = document.getElementById('input-height').value;
     const weight = document.getElementById('input-weight').value;
-    // 🌟 수정된 부분 4: 가슴 사이즈 입력 필드의 ID를 input-cup-size로 변경
     const cupSize = document.getElementById('input-cup-size').value; 
     const charmPoint = document.getElementById('input-charm-point').value;
     const job = document.getElementById('input-job').value;
@@ -537,7 +536,7 @@ function updateProfileCard() {
     document.getElementById('output-name-age').textContent = `${name}, ${age}`;
     document.getElementById('output-height').textContent = `${height}cm`;
     document.getElementById('output-weight').textContent = `${weight}kg`;
-    // 🌟 수정된 부분 5: 가슴 사이즈 출력
+    // 🌟 가슴 사이즈 출력 업데이트: 텍스트 콘텐츠를 명시적으로 설정
     document.getElementById('output-cup-size').textContent = cupSize; 
     document.getElementById('output-charm-point').textContent = charmPoint;
     document.getElementById('output-job').textContent = job;
@@ -554,33 +553,39 @@ function updateProfileCard() {
     });
 }
 
-// 초기 로드 시 한 번 업데이트
+// 초기 로드 시 및 버튼 클릭 시 업데이트
 document.addEventListener('DOMContentLoaded', updateProfileCard);
 generateButton.addEventListener('click', updateProfileCard);
 
 
 // ======================================================================================
-// ⭐️ 이미지 다운로드 (html2canvas 사용)
+// ⭐️ 이미지 다운로드 (html2canvas 사용) - 잠재적 지연 문제 해결을 위해 업데이트 로직 보강
 // ======================================================================================
 downloadButton.addEventListener('click', () => {
-    // 1. 다운로드 버튼을 잠시 숨김 (카드 이미지에 포함되지 않도록)
+    // 1. 다운로드 전에 마지막으로 카드 업데이트를 강제 실행
+    updateProfileCard(); 
+    
+    // 2. 다운로드 버튼을 잠시 숨김 (카드 이미지에 포함되지 않도록)
     const originalDownloadStyle = downloadButton.style.display;
     downloadButton.style.display = 'none';
 
-    // 2. html2canvas로 카드 영역 캡처
-    html2canvas(profileCard, { 
-        backgroundColor: '#FFFFFF',
-        scale: 2 // 고화질 캡처
-    }).then(canvas => {
-        // 3. 숨겼던 버튼 다시 표시
-        downloadButton.style.display = originalDownloadStyle;
+    // 3. html2canvas로 카드 영역 캡처
+    // 캡처 전에 아주 짧은 지연(setTimeout)을 주어 DOM 업데이트가 완료될 시간을 벌어줍니다.
+    setTimeout(() => {
+        html2canvas(profileCard, { 
+            backgroundColor: '#FFFFFF',
+            scale: 2 // 고화질 캡처
+        }).then(canvas => {
+            // 4. 숨겼던 버튼 다시 표시
+            downloadButton.style.display = originalDownloadStyle;
 
-        // 4. 캔버스를 이미지 파일로 변환하여 다운로드
-        const a = document.createElement('a');
-        a.href = canvas.toDataURL('image/png');
-        a.download = 'ELEGANCE_프로필_카드.png';
-        a.click();
-    });
+            // 5. 캔버스를 이미지 파일로 변환하여 다운로드
+            const a = document.createElement('a');
+            a.href = canvas.toDataURL('image/png');
+            a.download = 'ELEGANCE_프로필_카드.png';
+            a.click();
+        });
+    }, 50); // 50ms 지연 추가: DOM 업데이트가 완료될 충분한 시간 제공
 });
 </script>
 </body>
