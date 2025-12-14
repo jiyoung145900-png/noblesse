@@ -6,54 +6,57 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <style>
-/* 폰트 설정 및 전체 배경 */
+/* 폰트 및 전체 배경 */
 body {
     font-family: 'Malgun Gothic', '맑은 고딕', sans-serif;
     margin: 0;
-    /* 노블레스 테마: 짙은 남색 배경 */
+    /* 노블레스 테마: 짙은 배경 */
     background: #1A1A2E; 
     color: #F0F0F0;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    padding: 20px;
+    padding: 30px;
 }
 
 /* ⚜️ 메인 컨테이너 */
 #app-container {
     display: flex;
-    gap: 40px;
-    background: #282A45; /* 살짝 밝은 배경 */
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-    /* 노블레스 포인트 색상 (금색 계열) */
-    --noblesse-gold: #CFA632; 
+    gap: 50px;
+    background: #232742; /* 살짝 밝은 네이비 */
+    padding: 40px;
+    border-radius: 18px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+    /* 노블레스 포인트 색상 (골드/브론즈) */
+    --noblesse-gold: #DFAA6D; 
+    --noblesse-accent-bg: #40466F; /* 강조 배경색 */
 }
 
-/* ⬅️ 입력 폼 스타일 */
+/* ⬅️ 입력 폼 영역 */
 #input-form {
     width: 400px;
+    padding: 20px;
 }
 
 #input-form h2 {
     color: var(--noblesse-gold);
-    border-bottom: 2px solid var(--noblesse-gold);
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-    font-size: 24px;
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 30px;
+    letter-spacing: 1px;
 }
 
 .input-group {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 .input-group label {
     display: block;
     font-weight: bold;
-    margin-bottom: 5px;
-    color: #E0E0E0;
+    margin-bottom: 8px;
+    color: #C0C0C0;
+    font-size: 15px;
 }
 
 .input-group input[type="text"], 
@@ -62,12 +65,19 @@ body {
     width: 100%;
     padding: 12px;
     border: 1px solid #444;
-    border-radius: 8px;
-    background: #333;
+    border-radius: 6px;
+    background: #33334F;
     color: #FFF;
     font-size: 16px;
     box-sizing: border-box;
     transition: border-color 0.3s;
+}
+.input-group input[type="file"] {
+    border: none;
+    padding: 0;
+}
+.input-group textarea {
+    resize: vertical;
 }
 
 .input-group input:focus, 
@@ -75,6 +85,7 @@ body {
 .input-group textarea:focus {
     border-color: var(--noblesse-gold);
     outline: none;
+    box-shadow: 0 0 5px rgba(223, 170, 109, 0.5);
 }
 
 /* 버튼 스타일 */
@@ -90,112 +101,120 @@ body {
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.1s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 #generate-button:hover {
-    background: #DFAE40;
-}
-#generate-button:active {
-    transform: scale(0.99);
+    background: #E8BF92;
 }
 
 /* ➡️ 프로필 카드 출력부 (핵심) */
 #profile-card-container {
-    width: 420px;
+    width: 400px; /* 고정 너비 */
     min-height: 600px;
-    background: #222233; /* 어두운 카드 배경 */
+    background: #F8F8F8; /* 밝은 카드 배경 (데이지 스타일 유지) */
     border: 3px solid var(--noblesse-gold);
-    border-radius: 12px;
-    padding: 25px;
-    box-shadow: 0 0 20px rgba(207, 166, 50, 0.3);
-    position: relative;
+    border-radius: 10px;
+    box-shadow: 0 0 25px rgba(223, 170, 109, 0.4);
+    overflow: hidden;
+    color: #333;
 }
 
-/* 로고 및 제목 */
+/* 카드 상단 로고 영역 */
 #card-header {
+    background: var(--noblesse-accent-bg); /* 로고 배경색 */
+    padding: 15px 0;
     text-align: center;
-    padding-bottom: 15px;
-    margin-bottom: 15px;
-    border-bottom: 1px solid #444;
+    border-bottom: 2px solid var(--noblesse-gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 }
 
-/* 로고 이미지 자리 (실제 로고 이미지 파일이 필요합니다) */
 #noblesse-logo {
-    width: 150px; 
-    height: auto;
-    margin-bottom: 10px;
+    width: 40px; 
+    height: 40px;
+    /* 임시 이미지 스타일 (실제 파일로 교체 시 이 CSS는 불필요) */
+    background: url('noblesse_logo.png') center/cover no-repeat;
+    display: block;
 }
-
-/* 임시 로고 스타일 (실제 이미지 없을 경우) */
-.logo-placeholder {
-    font-size: 28px;
-    font-weight: bold;
-    color: var(--noblesse-gold);
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+#card-title {
+    font-size: 22px;
+    color: #FFF;
+    font-weight: 600;
 }
-
 
 /* 프로필 사진 자리 */
 #profile-photo {
     width: 100%;
-    height: 300px; /* 높이 조정 */
-    background: #333;
-    border-radius: 8px;
-    margin-bottom: 20px;
+    height: 350px; 
+    background: #CCC;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #AAA;
+    color: #777;
     font-style: italic;
-    border: 1px dashed #555;
     overflow: hidden;
 }
 
+#profile-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 /* 카드 본문 */
-#card-body h3 {
-    font-size: 30px;
-    color: #FFF;
-    margin: 0 0 10px 0;
+#card-body {
+    padding: 20px;
+}
+
+#output-name-age {
+    font-size: 26px;
+    color: var(--noblesse-gold);
     font-weight: 800;
+    margin: 0 0 10px 0;
 }
 
 #card-stats {
     display: flex;
     flex-wrap: wrap;
-    font-size: 16px;
-    color: #AAA;
+    font-size: 15px;
+    color: #666;
     margin-bottom: 15px;
 }
 
 .stat-item {
-    margin-right: 20px;
+    margin-right: 15px;
     margin-bottom: 5px;
 }
 
 .stat-item strong {
-    color: var(--noblesse-gold);
-    font-weight: normal;
+    color: #333;
+    font-weight: bold;
 }
 
 /* 소개 문구 */
 #card-bio {
-    background: #33334F;
+    background: #EBEBF5;
     padding: 15px;
     border-radius: 8px;
     font-style: italic;
-    font-size: 17px;
-    color: #FFF;
-    line-height: 1.5;
+    font-size: 16px;
+    color: #444;
+    line-height: 1.4;
     margin-bottom: 20px;
-    border-left: 5px solid var(--noblesse-gold);
+    border-left: 4px solid var(--noblesse-gold);
 }
 
 /* 취미 해시태그 */
 #card-hobbies-title {
-    color: var(--noblesse-gold);
-    font-size: 18px;
+    color: #555;
+    font-size: 16px;
     font-weight: bold;
     margin-bottom: 10px;
+    border-top: 1px dashed #DDD;
+    padding-top: 15px;
 }
 
 #card-hobbies-list {
@@ -205,22 +224,21 @@ body {
 }
 
 .hobby-tag {
-    background: #444466;
-    color: #EEE;
-    padding: 6px 12px;
-    border-radius: 15px;
+    background: var(--noblesse-gold);
+    color: #FFF;
+    padding: 6px 10px;
+    border-radius: 20px;
     font-size: 14px;
-    border: 1px solid #555;
+    font-weight: 500;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* 다운로드 버튼 */
 #download-button {
-    position: absolute;
-    bottom: -50px; /* 카드 아래로 위치 */
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 12px 20px;
-    background: #444466;
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    background: #33334F;
     color: var(--noblesse-gold);
     border: 2px solid var(--noblesse-gold);
     border-radius: 8px;
@@ -230,7 +248,7 @@ body {
 }
 
 #download-button:hover {
-    background: #555577;
+    background: #44446F;
 }
 
 </style>
@@ -242,7 +260,7 @@ body {
         <h2>⚜️ NOBLESSE 프로필 카드 생성기</h2>
 
         <div class="input-group">
-            <label>1. 프로필 사진 (파일 선택 또는 드래그 & 드롭)</label>
+            <label>1. 프로필 사진 (파일 선택)</label>
             <input type="file" id="photo-upload" accept="image/*">
         </div>
 
@@ -298,30 +316,35 @@ body {
     <div id="profile-card-wrapper" style="position: relative;">
         <div id="profile-card-container">
             <div id="card-header">
-                <div class="logo-placeholder">⚜️ NOBLESSE</div>
+                <div id="noblesse-logo" style="background-image: url('noblesse_logo.png');"></div>
+                <div id="card-title">NOBLESSE</div>
             </div>
 
             <div id="profile-photo">
-                사진을 여기에 넣어주세요
+                사진을 선택하여 업로드 해주세요
             </div>
 
             <div id="card-body">
-                <h3 id="output-name-age">이름, 나이</h3>
+                <h3 id="output-name-age">김노블레스, 30</h3>
                 
                 <div id="card-stats">
-                    <span class="stat-item">키: <strong id="output-height">0cm</strong></span>
-                    <span class="stat-item">몸무게: <strong id="output-weight">0kg</strong></span>
+                    <span class="stat-item">키: <strong id="output-height">178cm</strong></span>
+                    <span class="stat-item">몸무게: <strong id="output-weight">70kg</strong></span>
                     <span class="stat-item">사이즈: <strong id="output-size">C컵</strong></span>
-                    <span class="stat-item">직업: <strong id="output-job">직업명</strong></span>
+                    <span class="stat-item">직업: <strong id="output-job">전문직</strong></span>
                 </div>
 
                 <div id="card-bio">
-                    "여기에 한 줄 소개가 들어갑니다."
+                    "품격있는 만남을 추구하며, 진중한 대화를 즐깁니다."
                 </div>
 
                 <div id="card-hobbies-title"># 나의 취미</div>
                 <div id="card-hobbies-list">
-                    </div>
+                    <span class="hobby-tag">클래식 감상</span>
+                    <span class="hobby-tag">와인 테이스팅</span>
+                    <span class="hobby-tag">독서</span>
+                    <span class="hobby-tag">골프</span>
+                </div>
             </div>
         </div>
 
@@ -348,6 +371,7 @@ function updateProfileCard() {
     const size = document.getElementById('input-size').value;
     const job = document.getElementById('input-job').value;
     const bio = document.getElementById('input-bio').value;
+    // 쉼표로 구분된 취미를 배열로 변환
     const hobbies = document.getElementById('input-hobbies').value.split(',').map(h => h.trim()).filter(h => h.length > 0);
 
     // 1. 기본 정보 업데이트
@@ -382,7 +406,8 @@ photoUpload.addEventListener('change', (e) => {
     if (file) {
         const reader = new FileReader();
         reader.onload = (event) => {
-            profilePhoto.innerHTML = `<img src="${event.target.result}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">`;
+            // 이미지가 로드되면 profilePhoto 영역을 이미지로 채웁니다.
+            profilePhoto.innerHTML = `<img src="${event.target.result}" alt="프로필 사진">`;
         };
         reader.readAsDataURL(file);
     }
@@ -394,15 +419,16 @@ photoUpload.addEventListener('change', (e) => {
 // ======================================================================================
 downloadButton.addEventListener('click', () => {
     // 1. 다운로드 버튼을 잠시 숨김 (카드 이미지에 포함되지 않도록)
+    const originalDownloadStyle = downloadButton.style.display;
     downloadButton.style.display = 'none';
 
     // 2. html2canvas로 카드 영역 캡처
     html2canvas(profileCard, { 
-        backgroundColor: null, // 배경색을 투명하게 처리 (필요에 따라)
+        backgroundColor: '#F8F8F8', // 배경색을 명확히 지정하여 흰색 배경을 유지
         scale: 2 // 고화질 캡처
     }).then(canvas => {
         // 3. 숨겼던 버튼 다시 표시
-        downloadButton.style.display = 'block';
+        downloadButton.style.display = originalDownloadStyle;
 
         // 4. 캔버스를 이미지 파일로 변환하여 다운로드
         const a = document.createElement('a');
