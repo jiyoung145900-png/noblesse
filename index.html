@@ -4,13 +4,14 @@
 <meta charset="UTF-8">
 <title>🌸 엘레강스 프로필 카드 생성기</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
 
 <style>
 /* 폰트 및 전체 배경 */
 body {
-    font-family: 'Noto Sans KR', 'Malgun Gothic', '맑은 고딕', sans-serif;
+    font-family: 'Noto Sans KR', sans-serif; /* 기본 폰트 변경 */
     margin: 0;
-    background: linear-gradient(to bottom right, #F5EFE6, #E8D8C4); /* 부드러운 그라데이션 베이지 */
+    background: linear-gradient(to bottom right, #F5EFE6, #E8D8C4);
     color: #4A4A4A;
     display: flex;
     justify-content: center;
@@ -23,12 +24,12 @@ body {
 /* 🌸 메인 컨테이너 */
 #app-container {
     display: flex;
-    gap: 50px; /* 간격 조정 */
-    background: #FFFFFF; /* 밝은 흰색 배경 */
+    gap: 50px;
+    background: #FFFFFF;
     padding: 40px;
     border-radius: 20px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-    border: 1px solid #E0E0E0; /* 얇은 테두리 */
+    border: 1px solid #E0E0E0;
     max-width: 1000px;
     width: 100%;
 
@@ -39,15 +40,16 @@ body {
 
 /* ⬅️ 입력 폼 영역 */
 #input-form {
-    width: 400px; /* 너비 조정 */
+    width: 400px;
     padding: 25px;
-    border: 1px solid var(--elegance-pink); /* 입력 폼 테두리 */
+    border: 1px solid var(--elegance-pink);
     border-radius: 15px;
-    background: #FFF8F0; /* 아주 밝은 베이지 */
+    background: #FFF8F0;
     box-shadow: 0 0 20px rgba(212, 175, 185, 0.2);
 }
 
 #input-form h2 {
+    font-family: 'Playfair Display', serif; /* 제목 폰트 적용 */
     color: var(--elegance-dark);
     text-align: center;
     font-size: 26px;
@@ -62,7 +64,7 @@ body {
 #input-form h2 .logo-icon {
     width: 35px; height: 35px;
     vertical-align: middle;
-    background-image: url('noblesse_logo.png'); /* 로고 아이콘 */
+    background-image: url('noblesse_logo.png');
     background-size: cover;
     background-position: center;
     display: inline-block;
@@ -73,6 +75,7 @@ body {
 }
 
 .input-group label {
+    font-family: 'Noto Sans KR', sans-serif;
     display: block;
     font-weight: 600;
     margin-bottom: 8px;
@@ -83,6 +86,7 @@ body {
 .input-group input[type="text"],
 .input-group select,
 .input-group textarea {
+    font-family: 'Noto Sans KR', sans-serif;
     width: 100%;
     padding: 12px;
     border: 1px solid #CCC;
@@ -93,32 +97,41 @@ body {
     box-sizing: border-box;
     transition: border-color 0.3s, box-shadow 0.3s;
 }
-.input-group input[type="file"] {
-    border: 1px solid #CCC; /* 파일 입력 필드도 테두리 */
-    border-radius: 8px;
-    padding: 10px;
-    background: #FFFFFF;
-    color: #6A6A6A;
-}
-.input-group textarea {
-    resize: vertical;
-    min-height: 80px;
+
+/* 🌟 드래그 앤 드롭 영역 스타일 */
+#drop-area {
+    border: 2px dashed #D4AFB9;
+    padding: 20px;
+    text-align: center;
+    color: #999;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: background-color 0.3s, border-color 0.3s;
+    margin-bottom: 15px;
 }
 
-.input-group input:focus,
-.input-group select:focus,
-.input-group textarea:focus {
-    border-color: var(--elegance-pink);
-    outline: none;
-    box-shadow: 0 0 10px rgba(212, 175, 185, 0.4);
+#drop-area.highlight {
+    background-color: #F8F0F5;
+    border-color: #A96E7E;
+}
+
+#drop-area input[type="file"] {
+    display: none; /* 숨김 */
+}
+
+#drop-area-text {
+    font-size: 14px;
+    font-weight: 500;
+    color: #888;
 }
 
 /* 버튼 스타일 */
 #generate-button {
+    font-family: 'Noto Sans KR', sans-serif;
     width: 100%;
     padding: 16px;
     margin-top: 30px;
-    background: linear-gradient(to right, var(--elegance-pink), #E8BF92); /* 핑크-골드 그라데이션 */
+    background: linear-gradient(to right, var(--elegance-pink), #E8BF92);
     color: #FFFFFF;
     border: none;
     border-radius: 10px;
@@ -133,9 +146,6 @@ body {
     gap: 10px;
     letter-spacing: 0.8px;
 }
-#generate-button .icon {
-    font-size: 1.3em;
-}
 
 #generate-button:hover {
     background: linear-gradient(to right, #E8BF92, var(--elegance-pink));
@@ -146,10 +156,10 @@ body {
 /* ➡️ 프로필 카드 출력부 */
 #profile-card-wrapper {
     position: relative;
-    padding-bottom: 70px; /* 다운로드 버튼 공간 확보 */
+    padding-bottom: 70px;
 }
 #profile-card-container {
-    width: 420px; /* 너비 조정 */
+    width: 420px;
     background: #FFFFFF;
     border: 1px solid var(--elegance-pink);
     border-radius: 15px;
@@ -160,7 +170,7 @@ body {
 
 /* 카드 상단 로고 및 제목 영역 */
 #card-header {
-    background: linear-gradient(to right, var(--elegance-dark), #4A4A4A); /* 다크 그라데이션 */
+    background: linear-gradient(to right, var(--elegance-dark), #4A4A4A);
     padding: 18px 0;
     text-align: center;
     border-bottom: 2px solid var(--elegance-gold);
@@ -187,7 +197,7 @@ body {
 /* 프로필 사진 자리 */
 #profile-photo {
     width: 100%;
-    height: 350px; /* 높이 조정 */
+    height: 350px;
     background: #F0F0F0;
     display: flex;
     justify-content: center;
@@ -209,7 +219,7 @@ body {
 }
 
 #output-name-age {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Playfair Display', serif; /* 이름 강조 폰트 */
     font-size: 28px;
     color: var(--elegance-gold);
     font-weight: 800;
@@ -219,13 +229,14 @@ body {
 }
 
 #card-stats {
+    font-family: 'Noto Sans KR', sans-serif;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center; /* 중앙 정렬 */
+    justify-content: center;
     font-size: 15px;
     color: #666;
     margin-bottom: 20px;
-    gap: 15px; /* 간격 조정 */
+    gap: 15px;
 }
 
 .stat-item {
@@ -237,12 +248,13 @@ body {
 
 .stat-item strong {
     color: var(--elegance-dark);
-    font-weight: bold;
+    font-weight: 600; /* Noto Sans KR 굵기 */
 }
 
 /* 소개 문구 */
 #card-bio {
-    background: #FDF5E6; /* 아주 밝은 베이지 */
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #FDF5E6;
     padding: 20px;
     border-radius: 10px;
     font-style: italic;
@@ -255,14 +267,15 @@ body {
     text-align: center;
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
+/* Playfair Display 폰트를 따옴표에 적용하여 포인트를 줍니다. */
 #card-bio::before {
     content: "“";
     position: absolute;
     top: 5px;
     left: 10px;
-    font-family: 'Playfair Display', serif;
+    font-family: 'Playfair Display', serif; 
     font-size: 40px;
-    color: #DDA0DD; /* 따옴표 색상 변경 */
+    color: #DDA0DD;
     font-weight: 900;
 }
 #card-bio::after {
@@ -272,13 +285,14 @@ body {
     right: 10px;
     font-family: 'Playfair Display', serif;
     font-size: 40px;
-    color: #DDA0DD; /* 따옴표 색상 변경 */
+    color: #DDA0DD;
     font-weight: 900;
 }
 
 
 /* 관심사 해시태그 */
 #card-hobbies-title {
+    font-family: 'Noto Sans KR', sans-serif;
     color: var(--elegance-dark);
     font-size: 16px;
     font-weight: bold;
@@ -291,11 +305,12 @@ body {
 #card-hobbies-list {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center; /* 중앙 정렬 */
+    justify-content: center;
     gap: 8px;
 }
 
 .hobby-tag {
+    font-family: 'Noto Sans KR', sans-serif;
     background: var(--elegance-pink);
     color: #FFFFFF;
     padding: 7px 14px;
@@ -311,7 +326,8 @@ body {
 
 /* 다운로드 버튼 */
 #download-button {
-    width: calc(100% - 2px); /* 테두리 포함 계산 */
+    font-family: 'Noto Sans KR', sans-serif;
+    width: calc(100% - 2px);
     padding: 15px;
     margin-top: 25px;
     background: var(--elegance-dark);
@@ -333,21 +349,18 @@ body {
     color: #F0D59D;
     transform: translateY(-2px);
 }
-
-/* Google Fonts 임포트 */
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700;900&display=swap');
-
 </style>
 </head>
 
 <body>
 <div id="app-container">
     <div id="input-form">
-        <h2><span class="logo-icon"></span> 엘레강스 프로필 카드 생성기</h2>
+        <h2><span class="logo-icon"></span> ELEGANCE PROFILE</h2>
 
-        <div class="input-group">
-            <label>1. 프로필 사진 (파일 선택)</label>
+        <label>1. 프로필 사진 업로드</label>
+        <div id="drop-area">
             <input type="file" id="photo-upload" accept="image/*">
+            <div id="drop-area-text">사진을 **드래그**하거나 **클릭**하여 업로드하세요.</div>
         </div>
 
         <div class="input-group">
@@ -435,22 +448,80 @@ body {
 
 <script>
 // ======================================================================================
-// ⭐️ 데이터 업데이트 및 프로필 카드 생성 로직
+// ⭐️ 드래그 앤 드롭 및 사진 미리보기 로직
 // ======================================================================================
 const photoUpload = document.getElementById('photo-upload');
+const dropArea = document.getElementById('drop-area');
+const profilePhoto = document.getElementById('profile-photo');
+
+// 파일 처리 함수
+function handleFile(file) {
+    if (file && file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            profilePhoto.innerHTML = `<img src="${event.target.result}" alt="프로필 사진">`;
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
+// 1. Input Click 이벤트 처리
+photoUpload.addEventListener('change', (e) => {
+    handleFile(e.target.files[0]);
+});
+
+// 2. Drop Area 이벤트 처리 (드래그 앤 드롭)
+['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+    dropArea.addEventListener(eventName, preventDefaults, false);
+});
+
+function preventDefaults (e) {
+    e.preventDefault();
+    e.stopPropagation();
+}
+
+// 하이라이트 효과
+['dragenter', 'dragover'].forEach(eventName => {
+    dropArea.addEventListener(eventName, () => dropArea.classList.add('highlight'), false);
+});
+['dragleave', 'drop'].forEach(eventName => {
+    dropArea.addEventListener(eventName, () => dropArea.classList.remove('highlight'), false);
+});
+
+// 드롭 처리
+dropArea.addEventListener('drop', (e) => {
+    let dt = e.dataTransfer;
+    let files = dt.files;
+    
+    // 드롭된 파일 중 첫 번째 이미지를 사용
+    if (files.length > 0) {
+        handleFile(files[0]);
+    }
+}, false);
+
+
+// 3. Drop Area 클릭 시 파일 선택창 열기
+dropArea.addEventListener('click', () => {
+    photoUpload.click();
+});
+
+
+// ======================================================================================
+// ⭐️ 데이터 업데이트 및 프로필 카드 생성 로직
+// ======================================================================================
 const generateButton = document.getElementById('generate-button');
 const downloadButton = document.getElementById('download-button');
 const profileCard = document.getElementById('profile-card-container');
-const profilePhoto = document.getElementById('profile-photo');
 
 function updateProfileCard() {
     const name = document.getElementById('input-name').value;
     const age = document.getElementById('input-age').value;
     const height = document.getElementById('input-height').value;
     const weight = document.getElementById('input-weight').value;
-    const charmPoint = document.getElementById('input-charm-point').value; // 매력 포인트 추가
+    const charmPoint = document.getElementById('input-charm-point').value;
     const job = document.getElementById('input-job').value;
     const bio = document.getElementById('input-bio').value;
+    
     // 쉼표로 구분된 관심사를 배열로 변환
     const hobbies = document.getElementById('input-hobbies').value.split(',').map(h => h.trim()).filter(h => h.length > 0);
 
@@ -458,7 +529,7 @@ function updateProfileCard() {
     document.getElementById('output-name-age').textContent = `${name}, ${age}`;
     document.getElementById('output-height').textContent = `${height}cm`;
     document.getElementById('output-weight').textContent = `${weight}kg`;
-    document.getElementById('output-charm-point').textContent = charmPoint; // 매력 포인트 출력
+    document.getElementById('output-charm-point').textContent = charmPoint;
     document.getElementById('output-job').textContent = job;
     document.getElementById('card-bio').textContent = `"${bio}"`;
 
@@ -479,21 +550,6 @@ generateButton.addEventListener('click', updateProfileCard);
 
 
 // ======================================================================================
-// ⭐️ 사진 미리보기 및 파일 업로드 로직
-// ======================================================================================
-photoUpload.addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-            profilePhoto.innerHTML = `<img src="${event.target.result}" alt="프로필 사진">`;
-        };
-        reader.readAsDataURL(file);
-    }
-});
-
-
-// ======================================================================================
 // ⭐️ 이미지 다운로드 (html2canvas 사용)
 // ======================================================================================
 downloadButton.addEventListener('click', () => {
@@ -503,7 +559,7 @@ downloadButton.addEventListener('click', () => {
 
     // 2. html2canvas로 카드 영역 캡처
     html2canvas(profileCard, { 
-        backgroundColor: '#FFFFFF', // 배경색을 명확히 지정하여 흰색 배경을 유지
+        backgroundColor: '#FFFFFF',
         scale: 2 // 고화질 캡처
     }).then(canvas => {
         // 3. 숨겼던 버튼 다시 표시
@@ -512,7 +568,7 @@ downloadButton.addEventListener('click', () => {
         // 4. 캔버스를 이미지 파일로 변환하여 다운로드
         const a = document.createElement('a');
         a.href = canvas.toDataURL('image/png');
-        a.download = 'ELEGANCE_프로필_카드.png'; // 파일 이름 변경
+        a.download = 'ELEGANCE_프로필_카드.png';
         a.click();
     });
 });
