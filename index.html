@@ -10,7 +10,6 @@
 body {
     font-family: 'Malgun Gothic', '맑은 고딕', sans-serif;
     margin: 0;
-    /* 노블레스 테마: 짙은 배경 */
     background: #1A1A2E; 
     color: #F0F0F0;
     display: flex;
@@ -23,61 +22,80 @@ body {
 /* ⚜️ 메인 컨테이너 */
 #app-container {
     display: flex;
-    gap: 50px;
-    background: #232742; /* 살짝 밝은 네이비 */
-    padding: 40px;
+    gap: 40px; /* 이미지와 간격 유사하게 조정 */
+    background: #232742; 
+    padding: 30px; /* 이미지와 패딩 유사하게 조정 */
     border-radius: 18px;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
-    /* 노블레스 포인트 색상 (골드/브론즈) */
-    --noblesse-gold: #DFAA6D; 
-    --noblesse-accent-bg: #40466F; /* 강조 배경색 */
+    border: 2px solid #50557A; /* 메인 컨테이너 테두리 추가 */
+    
+    --noblesse-gold: #DFAA6D; /* 골드/브론즈 계열 */
+    --noblesse-dark-blue: #2A2E4B; /* 어두운 남색 강조 */
 }
 
 /* ⬅️ 입력 폼 영역 */
 #input-form {
-    width: 400px;
+    width: 380px; /* 너비 조정 */
     padding: 20px;
+    border: 2px solid var(--noblesse-gold); /* 입력 폼 테두리 */
+    border-radius: 12px;
+    background: var(--noblesse-dark-blue);
+    box-shadow: 0 0 15px rgba(223, 170, 109, 0.2);
 }
 
 #input-form h2 {
     color: var(--noblesse-gold);
     text-align: center;
-    font-size: 28px;
-    margin-bottom: 30px;
+    font-size: 24px; /* 글자 크기 조정 */
+    margin-bottom: 25px;
     letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+#input-form h2 .logo-icon {
+    width: 30px; height: 30px;
+    vertical-align: middle;
+    background-image: url('noblesse_logo.png'); /* 로고 아이콘 */
+    background-size: cover;
+    background-position: center;
+    display: inline-block;
 }
 
 .input-group {
-    margin-bottom: 20px;
+    margin-bottom: 18px; /* 간격 조정 */
 }
 
 .input-group label {
     display: block;
     font-weight: bold;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     color: #C0C0C0;
-    font-size: 15px;
+    font-size: 14px; /* 글자 크기 조정 */
 }
 
 .input-group input[type="text"], 
 .input-group select, 
 .input-group textarea {
     width: 100%;
-    padding: 12px;
-    border: 1px solid #444;
+    padding: 10px; /* 패딩 조정 */
+    border: 1px solid #555; /* 테두리 색상 조정 */
     border-radius: 6px;
-    background: #33334F;
+    background: #383C5A; /* 입력 필드 배경색 */
     color: #FFF;
-    font-size: 16px;
+    font-size: 15px;
     box-sizing: border-box;
-    transition: border-color 0.3s;
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
 .input-group input[type="file"] {
     border: none;
     padding: 0;
+    color: #AAA;
 }
 .input-group textarea {
     resize: vertical;
+    min-height: 60px; /* 최소 높이 설정 */
 }
 
 .input-group input:focus, 
@@ -85,44 +103,54 @@ body {
 .input-group textarea:focus {
     border-color: var(--noblesse-gold);
     outline: none;
-    box-shadow: 0 0 5px rgba(223, 170, 109, 0.5);
+    box-shadow: 0 0 8px rgba(223, 170, 109, 0.4);
 }
 
 /* 버튼 스타일 */
 #generate-button {
     width: 100%;
-    padding: 15px;
-    margin-top: 20px;
+    padding: 14px; /* 패딩 조정 */
+    margin-top: 25px;
     background: var(--noblesse-gold);
     color: #1A1A2E;
     border: none;
     border-radius: 8px;
-    font-size: 18px;
+    font-size: 17px;
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.1s;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    display: flex; /* 아이콘과 텍스트 중앙 정렬 */
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+#generate-button .icon {
+    font-size: 1.2em;
 }
 
 #generate-button:hover {
     background: #E8BF92;
 }
 
-/* ➡️ 프로필 카드 출력부 (핵심) */
+/* ➡️ 프로필 카드 출력부 */
+#profile-card-wrapper {
+    position: relative; /* 다운로드 버튼 위치 기준 */
+    padding-bottom: 60px; /* 다운로드 버튼 공간 확보 */
+}
 #profile-card-container {
-    width: 400px; /* 고정 너비 */
-    min-height: 600px;
-    background: #F8F8F8; /* 밝은 카드 배경 (데이지 스타일 유지) */
+    width: 380px; /* 이미지와 동일하게 너비 조정 */
+    background: #F8F8F8; /* 밝은 카드 배경 */
     border: 3px solid var(--noblesse-gold);
-    border-radius: 10px;
+    border-radius: 12px;
     box-shadow: 0 0 25px rgba(223, 170, 109, 0.4);
     overflow: hidden;
     color: #333;
 }
 
-/* 카드 상단 로고 영역 */
+/* 카드 상단 로고 및 제목 영역 */
 #card-header {
-    background: var(--noblesse-accent-bg); /* 로고 배경색 */
+    background: var(--noblesse-dark-blue); /* 로고 배경색 */
     padding: 15px 0;
     text-align: center;
     border-bottom: 2px solid var(--noblesse-gold);
@@ -132,23 +160,22 @@ body {
     gap: 10px;
 }
 
-#noblesse-logo {
-    width: 40px; 
-    height: 40px;
-    /* 임시 이미지 스타일 (실제 파일로 교체 시 이 CSS는 불필요) */
-    background: url('noblesse_logo.png') center/cover no-repeat;
-    display: block;
+#card-header .logo-image {
+    width: 35px; /* 로고 이미지 크기 조정 */
+    height: 35px;
+    object-fit: contain; /* 이미지 비율 유지 */
 }
-#card-title {
-    font-size: 22px;
+#card-header #card-title {
+    font-size: 20px; /* 글자 크기 조정 */
     color: #FFF;
     font-weight: 600;
+    letter-spacing: 1px;
 }
 
 /* 프로필 사진 자리 */
 #profile-photo {
     width: 100%;
-    height: 350px; 
+    height: 300px; /* 높이 조정 */
     background: #CCC;
     display: flex;
     justify-content: center;
@@ -156,8 +183,8 @@ body {
     color: #777;
     font-style: italic;
     overflow: hidden;
+    font-size: 15px; /* 안내 문구 크기 */
 }
-
 #profile-photo img {
     width: 100%;
     height: 100%;
@@ -170,7 +197,7 @@ body {
 }
 
 #output-name-age {
-    font-size: 26px;
+    font-size: 24px; /* 글자 크기 조정 */
     color: var(--noblesse-gold);
     font-weight: 800;
     margin: 0 0 10px 0;
@@ -179,13 +206,13 @@ body {
 #card-stats {
     display: flex;
     flex-wrap: wrap;
-    font-size: 15px;
+    font-size: 14px; /* 글자 크기 조정 */
     color: #666;
     margin-bottom: 15px;
 }
 
 .stat-item {
-    margin-right: 15px;
+    margin-right: 12px; /* 간격 조정 */
     margin-bottom: 5px;
 }
 
@@ -200,17 +227,37 @@ body {
     padding: 15px;
     border-radius: 8px;
     font-style: italic;
-    font-size: 16px;
+    font-size: 15px; /* 글자 크기 조정 */
     color: #444;
     line-height: 1.4;
     margin-bottom: 20px;
     border-left: 4px solid var(--noblesse-gold);
+    position: relative; /* 따옴표를 위한 위치 설정 */
 }
+#card-bio::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 5px;
+    font-size: 30px;
+    color: #AAA;
+    font-weight: 900;
+}
+#card-bio::after {
+    content: "”";
+    position: absolute;
+    bottom: -15px;
+    right: 5px;
+    font-size: 30px;
+    color: #AAA;
+    font-weight: 900;
+}
+
 
 /* 취미 해시태그 */
 #card-hobbies-title {
     color: #555;
-    font-size: 16px;
+    font-size: 15px; /* 글자 크기 조정 */
     font-weight: bold;
     margin-bottom: 10px;
     border-top: 1px dashed #DDD;
@@ -220,15 +267,15 @@ body {
 #card-hobbies-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 7px; /* 간격 조정 */
 }
 
 .hobby-tag {
     background: var(--noblesse-gold);
     color: #FFF;
-    padding: 6px 10px;
+    padding: 5px 10px; /* 패딩 조정 */
     border-radius: 20px;
-    font-size: 14px;
+    font-size: 13px; /* 글자 크기 조정 */
     font-weight: 500;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -238,17 +285,20 @@ body {
     width: 100%;
     padding: 12px;
     margin-top: 20px;
-    background: #33334F;
+    background: var(--noblesse-dark-blue);
     color: var(--noblesse-gold);
     border: 2px solid var(--noblesse-gold);
     border-radius: 8px;
     font-size: 16px;
     cursor: pointer;
     transition: all 0.3s;
+    position: absolute;
+    bottom: 0;
+    left: 0;
 }
 
 #download-button:hover {
-    background: #44446F;
+    background: #3A3E5E;
 }
 
 </style>
@@ -257,7 +307,7 @@ body {
 <body>
 <div id="app-container">
     <div id="input-form">
-        <h2>⚜️ NOBLESSE 프로필 카드 생성기</h2>
+        <h2><span class="logo-icon"></span> NOBLESSE 프로필 카드 생성기</h2>
 
         <div class="input-group">
             <label>1. 프로필 사진 (파일 선택)</label>
@@ -310,13 +360,13 @@ body {
             <input type="text" id="input-hobbies" value="클래식 감상, 와인 테이스팅, 독서, 골프">
         </div>
         
-        <button id="generate-button">✨ 프로필 카드 생성/업데이트</button>
+        <button id="generate-button"><span class="icon">✨</span> 프로필 카드 생성/업데이트</button>
     </div>
 
-    <div id="profile-card-wrapper" style="position: relative;">
+    <div id="profile-card-wrapper">
         <div id="profile-card-container">
             <div id="card-header">
-                <div id="noblesse-logo" style="background-image: url('noblesse_logo.png');"></div>
+                <img src="noblesse_logo.png" alt="Noblesse Logo" class="logo-image">
                 <div id="card-title">NOBLESSE</div>
             </div>
 
@@ -406,7 +456,6 @@ photoUpload.addEventListener('change', (e) => {
     if (file) {
         const reader = new FileReader();
         reader.onload = (event) => {
-            // 이미지가 로드되면 profilePhoto 영역을 이미지로 채웁니다.
             profilePhoto.innerHTML = `<img src="${event.target.result}" alt="프로필 사진">`;
         };
         reader.readAsDataURL(file);
