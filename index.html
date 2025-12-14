@@ -7,9 +7,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
 
 <style>
-/* 폰트 및 전체 배경 */
+/* 폰트 및 전체 배경 (스타일 변화 없음) */
 body {
-    font-family: 'Noto Sans KR', sans-serif; /* 기본 폰트 변경 */
+    font-family: 'Noto Sans KR', sans-serif;
     margin: 0;
     background: linear-gradient(to bottom right, #F5EFE6, #E8D8C4);
     color: #4A4A4A;
@@ -33,9 +33,9 @@ body {
     max-width: 1000px;
     width: 100%;
 
-    --elegance-pink: #D4AFB9; /* 은은한 핑크 */
-    --elegance-gold: #B8860B; /* 골드 강조색 */
-    --elegance-dark: #6C5B7B; /* 포인트 다크 색상 */
+    --elegance-pink: #D4AFB9;
+    --elegance-gold: #B8860B;
+    --elegance-dark: #6C5B7B;
 }
 
 /* ⬅️ 입력 폼 영역 */
@@ -49,7 +49,7 @@ body {
 }
 
 #input-form h2 {
-    font-family: 'Playfair Display', serif; /* 제목 폰트 적용 */
+    font-family: 'Playfair Display', serif;
     color: var(--elegance-dark);
     text-align: center;
     font-size: 26px;
@@ -186,7 +186,7 @@ body {
     object-fit: contain;
 }
 #card-header #card-title {
-    font-family: 'Playfair Display', serif; /* 우아한 폰트 */
+    font-family: 'Playfair Display', serif;
     font-size: 24px;
     color: #F8F8F8;
     font-weight: 700;
@@ -219,7 +219,7 @@ body {
 }
 
 #output-name-age {
-    font-family: 'Playfair Display', serif; /* 이름 강조 폰트 */
+    font-family: 'Playfair Display', serif;
     font-size: 28px;
     color: var(--elegance-gold);
     font-weight: 800;
@@ -248,7 +248,7 @@ body {
 
 .stat-item strong {
     color: var(--elegance-dark);
-    font-weight: 600; /* Noto Sans KR 굵기 */
+    font-weight: 600;
 }
 
 /* 소개 문구 */
@@ -378,9 +378,9 @@ body {
             <input type="text" id="input-height" value="165">
         </div>
 
-           <div class="input-group">
-            <label>5. 가슴 (cup)</label>
-            <input type="text" id="input-weight" value="50">
+        <div class="input-group">
+            <label>5. 가슴 사이즈 (cup)</label>
+            <input type="text" id="input-cup-size" value="C컵"> 
         </div>
 
         <div class="input-group">
@@ -427,6 +427,7 @@ body {
                 
                 <div id="card-stats">
                     <span class="stat-item">키: <strong id="output-height">165cm</strong></span>
+                    <span class="stat-item">사이즈: <strong id="output-cup-size">C컵</strong></span>
                     <span class="stat-item">몸무게: <strong id="output-weight">50kg</strong></span>
                     <span class="stat-item">매력 포인트: <strong id="output-charm-point">밝은 미소, 섬세한 마음</strong></span>
                     <span class="stat-item">직업: <strong id="output-job">아티스트</strong></span>
@@ -453,7 +454,7 @@ body {
 
 <script>
 // ======================================================================================
-// ⭐️ 드래그 앤 드롭 및 사진 미리보기 로직
+// ⭐️ 드래그 앤 드롭 및 사진 미리보기 로직 (변화 없음)
 // ======================================================================================
 const photoUpload = document.getElementById('photo-upload');
 const dropArea = document.getElementById('drop-area');
@@ -512,7 +513,7 @@ dropArea.addEventListener('click', () => {
 
 
 // ======================================================================================
-// ⭐️ 데이터 업데이트 및 프로필 카드 생성 로직
+// ⭐️ 데이터 업데이트 및 프로필 카드 생성 로직 (가슴 사이즈 반영)
 // ======================================================================================
 const generateButton = document.getElementById('generate-button');
 const downloadButton = document.getElementById('download-button');
@@ -523,6 +524,8 @@ function updateProfileCard() {
     const age = document.getElementById('input-age').value;
     const height = document.getElementById('input-height').value;
     const weight = document.getElementById('input-weight').value;
+    // 🌟 수정된 부분 4: 가슴 사이즈 입력 필드의 ID를 input-cup-size로 변경
+    const cupSize = document.getElementById('input-cup-size').value; 
     const charmPoint = document.getElementById('input-charm-point').value;
     const job = document.getElementById('input-job').value;
     const bio = document.getElementById('input-bio').value;
@@ -534,6 +537,8 @@ function updateProfileCard() {
     document.getElementById('output-name-age').textContent = `${name}, ${age}`;
     document.getElementById('output-height').textContent = `${height}cm`;
     document.getElementById('output-weight').textContent = `${weight}kg`;
+    // 🌟 수정된 부분 5: 가슴 사이즈 출력
+    document.getElementById('output-cup-size').textContent = cupSize; 
     document.getElementById('output-charm-point').textContent = charmPoint;
     document.getElementById('output-job').textContent = job;
     document.getElementById('card-bio').textContent = `"${bio}"`;
